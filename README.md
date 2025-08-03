@@ -1,2 +1,3 @@
-# esp32-p4-nano-simd
-Test repo for simd instructions on the esp32 p4 400mhz processor
+# SIMD Testing
+
+This just does a simple SIMD profile on large matrix multiplications.

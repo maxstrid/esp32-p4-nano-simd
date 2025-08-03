@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# esp idf files
+.cache/
+build/
+managed_components/
