@@ -18,13 +18,13 @@ static const char *TAG = "main";
 void fill_matrix(float matrix[MAT_SIZE * MAT_SIZE]) {
   for (int i = 0; i < MAT_SIZE * MAT_SIZE; ++i) {
     // Scale random float to [0.0, FLT_MAX]
-    matrix[i] = ((float)(esp_random() & 0xFFFFFF) / 0xFFFFFF) * FLT_MAX;
+    matrix[i] = ((float)(esp_random() & 0xFFFFFF) / 0xFFFFFF) * 1000;
   }
 }
 
 void app_main(void) {
-  float A[MAT_SIZE * MAT_SIZE];
-  float B[MAT_SIZE * MAT_SIZE];
+  __attribute__((aligned(16))) float A[MAT_SIZE * MAT_SIZE];
+  __attribute__((aligned(16))) float B[MAT_SIZE * MAT_SIZE];
 
   fill_matrix(A);
   fill_matrix(B);
@@ -32,9 +32,9 @@ void app_main(void) {
   int64_t ansi_time_accum = 0;
   for (int i = 0; i < 10; i++) {
     {
-      int64_t start_us = esp_timer_get_time();
+      __attribute__((aligned(16))) float C[MAT_SIZE * MAT_SIZE];
 
-      float C[MAT_SIZE * MAT_SIZE];
+      int64_t start_us = esp_timer_get_time();
 
       dspm_mult_f32_ansi(A, B, C, MAT_SIZE, MAT_SIZE, MAT_SIZE);
 
@@ -50,9 +50,9 @@ void app_main(void) {
   int64_t arp4_time_accum = 0;
   for (int i = 0; i < 10; i++) {
     {
-      int64_t start_us = esp_timer_get_time();
+      __attribute__((aligned(16))) float C[MAT_SIZE * MAT_SIZE];
 
-      float C[MAT_SIZE * MAT_SIZE];
+      int64_t start_us = esp_timer_get_time();
 
       dspm_mult_f32_arp4(A, B, C, MAT_SIZE, MAT_SIZE, MAT_SIZE);
 
