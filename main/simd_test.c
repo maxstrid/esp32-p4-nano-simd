@@ -44,7 +44,7 @@ void app_main(void) {
     }
   }
 
-  // 89us
+  // 101us
   ESP_LOGI(TAG, "dspm_mult_f32_ansi: %lld us average", ansi_time_accum / 10);
 
   int64_t arp4_time_accum = 0;
